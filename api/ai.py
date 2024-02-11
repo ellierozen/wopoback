@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify, request
 import openai
 
 # Define your OpenAI API key
-openai.api_key = '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'
+openai.api_key = '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'
 
 # Check if the API key is set
 if not openai.api_key:
