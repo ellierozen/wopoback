@@ -16,9 +16,11 @@ from api.user import user_api # Blueprint import api definition
 from api.player import player_api
 from api.ai import ai_api
 from api.score import score_api
+from api.stats import stats_api
 # database migrations
 from model.users import initUsers
 from model.players import initPlayers
+
 
 # setup App pages
 from projects.projects import app_projects # Blueprint directory import projects definition
@@ -34,7 +36,10 @@ app.register_blueprint(user_api) # register api routes
 app.register_blueprint(player_api)
 app.register_blueprint(app_projects) # register app pages
 app.register_blueprint(ai_api)
+app.register_blueprint(stats_api)
 app.register_blueprint(score_api)
+
+
 
 @app.errorhandler(404)  # catch for URL not found
 def page_not_found(e):
@@ -63,7 +68,6 @@ custom_cli = AppGroup('custom', help='Custom commands')
 @custom_cli.command('generate_data')
 def generate_data():
     initUsers()
-    initPlayers()
 
 # Register the custom command group with the Flask application
 app.cli.add_command(custom_cli)
