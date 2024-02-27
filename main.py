@@ -20,6 +20,7 @@ from api.stats import stats_api
 # database migrations
 from model.users import initUsers
 from model.players import initPlayers
+from model.statsm import initStats
 
 
 # setup App pages
@@ -68,7 +69,7 @@ custom_cli = AppGroup('custom', help='Custom commands')
 @custom_cli.command('generate_data')
 def generate_data():
     initUsers()
-
+    initStats()
 # Register the custom command group with the Flask application
 app.cli.add_command(custom_cli)
         

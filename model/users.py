@@ -26,6 +26,7 @@ class Post(db.Model):
 
     # Constructor of a Notes object, initializes of instance variables within object
     def __init__(self, uid, playerName, goals, number):
+        self.id = id
         self.uid = uid
         self.playerName = playerName
         self.goals = goals
