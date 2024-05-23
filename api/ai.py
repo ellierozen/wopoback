@@ -5,9 +5,9 @@ from openai import OpenAI
 api_key=os.getenv('OPENAI_API_KEY')
 client = OpenAI(api_key=api_key)
 
-# Define your OpenAI API key
 
-# Check if the API key is set
+
+#code based on Open ai api format and key used
 if not client.api_key:
     raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
 
@@ -17,7 +17,7 @@ ai_api = Blueprint('ai_api', __name__, url_prefix='/api/ai')
 def ask_question():
     data = request.get_json()
     
-    # Check if all required parameters are provided
+   
     if 'model' not in data or 'prompt' not in data:
         return jsonify({'error': 'Missing required parameters. Expected "model" and "prompt".'}), 400
     
@@ -46,7 +46,7 @@ def ask_question():
         max_tokens=max_tokens
     )
     
-    #answer = response.choices[0].text.strip()
+
     answer = 'no response'
     if (response and 
         response.choices and

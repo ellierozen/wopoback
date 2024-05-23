@@ -44,8 +44,8 @@ class Stats(db.Model):
 def initStats():
     with app.app_context():
         db.create_all()
-        u1 = Stats(uid=1, playerName='demi lee', goals=13, number=11)
-        u2 = Stats(uid=2, playerName='ellie r', goals=23, number=20)
+        u1 = Stats(uid=1, playerName='demi l', goals=13, number=11)
+        u2 = Stats(uid=2, playerName='moer j', goals=23, number=20)
         stats = [u1, u2]
         for stat in stats:
             try:

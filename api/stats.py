@@ -12,34 +12,27 @@ stats_api = Blueprint('stats_api', __name__,
 # API docs https://flask-restful.readthedocs.io/en/latest/api.html
 api = Api(stats_api)
 class UserAPI:        
-    class _CRUD(Resource):  # User API operation for Create, Read.  THe Update, Delete methods need to be implemeented
-        def post(self): # Create method
-            ''' Read data for json body '''
-            body = request.get_json()     
-            ''' Avoid garbage in, error checking '''
-            # validate name
+    class _CRUD(Resource): 
+        def post(self): 
+            body = request.get_json()   
+         
             playerName = body.get('playerName')
             if playerName is None or len(playerName) < 2:
                 return {'message': f'Name is missing, or is less than 2 characters'}, 400
-            # validate uid
+           
             uid = body.get('uid')
             if uid is None or len(uid) < 2:
                 return {'message': f'User ID is missing, or is less than 2 characters'}, 400
-            # look for password and dob
+           
             goals = body.get('goals')
             number = body.get('number')
-            # id = body.get('id')
-
     
-
-            ''' #1: Key code block, setup USER OBJECT '''
             stat = Stats( playerName = playerName, uid=uid, goals=goals, number=number)
 
             created_stat = stat.create()
-# success returns json of user
             if created_stat:
                 return jsonify(created_stat.read())
-            # failure returns error
+    
             return {'message': f'Processed {playerName}, either a format error or User ID {uid} is duplicate'}, 400
             ''' Additional garbage error checking '''
             # set password if provided
@@ -53,11 +46,17 @@ class UserAPI:
             # failure returns error
             return {'message': f'Processed {playerName}, either a format error or User ID {uid} is duplicate'}, 400
 
-        def get(self): # Read Method
-            users = Stats.query.all()    # read/extract all users from database
-            json_ready = [user.read() for user in users]  # prepare output in json
-            return jsonify(json_ready)  # jsonify creates Flask response object, more specific to APIs than json.dumps
-        
+        def get(self): 
+            sort_by = request.args.get('sort_by', 'goals')
+            order = request.args.get('order', 'desc')
+
+            if order == 'desc':
+                users = Stats.query.order_by(Stats.goals.desc()).all()
+            else:
+                users = Stats.query.order_by(Stats.goals.asc()).all()
+
+            json_ready = [user.read() for user in users]
+            return jsonify(json_ready)
     
   
 
